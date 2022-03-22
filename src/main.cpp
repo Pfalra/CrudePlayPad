@@ -3,8 +3,11 @@
 
 #define BUTTON0_PIN 3
 #define BUTTON1_PIN 4
-#define JBUTTON0_PIN 5
-#define JBUTTON1_PIN 6
+#define BUTTON2_PIN 5
+#define BUTTON3_PIN 6
+#define BUTTON4_PIN 7
+#define JBUTTON0_PIN 8
+#define JBUTTON1_PIN 9
 
 #define STICK0_X_PIN A0
 #define STICK0_Y_PIN A1
@@ -80,8 +83,29 @@ Button but1 = {
   .debounceCounter = 50
 };
 
+Button but2 = {
+  .pin = BUTTON2_PIN,
+  .state = HIGH,
+  .debounceCycles = 50,
+  .debounceCounter = 50
+};
 
-Button* buttons[] = {&but0, &but1, &stick0.jButton, &stick1.jButton, NULL};
+Button but3 = {
+  .pin = BUTTON3_PIN,
+  .state = HIGH,
+  .debounceCycles = 50,
+  .debounceCounter = 50
+};
+
+Button but4 = {
+  .pin = BUTTON4_PIN,
+  .state = HIGH,
+  .debounceCycles = 50,
+  .debounceCounter = 50
+};
+
+
+Button* buttons[] = {&but0, &but1, &but2, &but3, &but4, &stick0.jButton, &stick1.jButton, NULL};
 Joystick* sticks[] = {&stick0, &stick1, NULL};
 
 
@@ -162,10 +186,10 @@ void loop()
 
     /* Update the outStr */
     buttonsOut |= (butPtr->state << i);  
-    // Serial.print("Button on Pin: ");
-    // Serial.print(butPtr->pin);
-    // Serial.print("\tState:");
-    // Serial.println(butPtr->state);
+    Serial.print("Button on Pin: ");
+    Serial.print(butPtr->pin);
+    Serial.print("\tState:");
+    Serial.println(butPtr->state);
   }
 
   // Serial.write(buttonsOut);
@@ -177,9 +201,9 @@ void loop()
   {
     Joystick* stickPtr = sticks[i];
     updateStickAxes(stickPtr);
-    // Serial.write(stickPtr->id);
-    // Serial.write(stickPtr->xAxisVal);
-    // Serial.write(stickPtr->yAxisVal);
+    Serial.write(stickPtr->id);
+    Serial.write(stickPtr->xAxisVal);
+    Serial.write(stickPtr->yAxisVal);
     Serial1.write(stickPtr->id);
     Serial1.write(stickPtr->xAxisVal);
     Serial1.write(stickPtr->yAxisVal);
